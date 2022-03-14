@@ -50,6 +50,8 @@ def get_gsheets():
     records_df = pd.DataFrame.from_dict(records_data)
     return records_df, sheet_instance
 
+
+
 def check_auth(r):
     """
     checks if the user is authenticated or not 
@@ -59,11 +61,10 @@ def check_auth(r):
     
     if regions != None:
         for x in regions: 
-            st.sidebar.error(x)
+            st.error(x)
         
         return False
     else: 
-        st.sidebar.success("Authenticated")
         return True
 
 

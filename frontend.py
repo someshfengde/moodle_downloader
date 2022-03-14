@@ -5,22 +5,21 @@ from stuff_downloader import *
 import streamlit_authenticator as stauth
 from bs4 import BeautifulSoup
 import gspread
-
 import pandas as pd
-
-
 from oauth2client.service_account import ServiceAccountCredentials
 from tqdm import tqdm
+from subject_selection import * 
 
 
 
 
-st.title("Moodle Downloader")
-records_df , sheet_instance = get_gsheets()
-st.dataframe(records_df)
 
-username = st.sidebar.text_input("User Name")
-password = st.sidebar.text_input("Password",type='password')
+# records_df , sheet_instance = get_gsheets()
+# st.dataframe(records_df)
+if "auth" not in st.session_state:
+    st.session_state.auth = False 
+    st.session_state.session = None
+    st.session_state.home_page_content = None
 
 def login_me(username , password):
     payload = {
@@ -30,49 +29,38 @@ def login_me(username , password):
         "anchor": None
     }
     s,r = get_session(payload)
+    st.session_state.session = s
     return s,r
 
-if st.sidebar.button("Login"):
-    s,r = login_me(username,password)
-    if check_auth(r):
-        subjects_and_links = get_links_for_subject(s,r)
-        selected_keys = [] 
-        for x in subjects_and_links.keys():
-            selected_keys =  st.checkbox(x,selected_keys) 
-        known_variables = {selected_link: st.checkbox(f"{subject} ({selected_link})") for subject, selected_link in subjects_and_links}  
+def show_login_form():
+    submit = False 
+    form_sample = st.empty()
 
-        st.write(known_variables)
-        # options = st.multiselect("Choose subjects to download", subjects_and_links.keys())
-        # st.write("selected subjects are : ",options)
 
-        # st.write(subjects_and_links)
+    with form_sample.form("login form"):
+        st.write("Enter moodle ID")
+        username = st.text_input("Enter moodle ID (numbers only)")
+        st.write("Enter password")
+        password = st.text_input("password", type = "password")
 
-    # if password == '12345':
-    # create_usertable()
-    # hashed_pswd = make_hashes(password)
+        submitted = st.form_submit_button("Submit")
+        if submitted:
+            if username != "" or password != "": 
+                s,r = login_me(username,password)
+                
+                if check_auth(r):
+                    
+                    st.session_state.auth = True
+                    st.session_state.home_page_content  = r 
+                    submit = submitted
+                    # st.write(subjects_and_links)
+                    
+                else: 
+                    st.session_state.auth = False
+                    st.warning("Login Failed")
+        
+    if submit:
+        form_sample.empty()
+        st.success("Successfully logged in")
 
-    # st.success("Logged In as {}".format(username))
 
-    # task = st.selectbox("Task",["Add Post","Analytics","Profiles"])
-    # if task == "Add Post":
-    #         st.subheader("Add Your Post")
-
-    #     elif task == "Analytics":
-    #         st.subheader("Analytics")
-    #     elif task == "Profiles":
-    #         st.subheader("User Profiles")
-    #         user_result = view_all_users()
-    #         clean_db = pd.DataFrame(user_result,columns=["Username","Password"])
-    #         st.dataframe(clean_db)
-else :
-    st.warning("Incorrect Username/Password")
-# names = ['John Smith','Rebecca Briggs']
-# usernames = ['jsmith','rbriggs']
-# passwords = ['123','456']
-
-# hashed_passwords = stauth.hasher(passwords).generate()
-
-# authenticator = stauth.authenticate(names,usernames,hashed_passwords,
-#     'some_cookie_name','some_signature_key',cookie_expiry_days=30)
-
-# name, authentication_status = authenticator.login('Login','main')
