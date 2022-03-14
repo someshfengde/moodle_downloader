@@ -6,10 +6,17 @@ if "auth" not in st.session_state:
     st.session_state.auth = False 
 st.title("Moodle Downloader")
 
-show_login_form()
+if not st.session_state.auth:
+    show_login_form()
 if st.session_state.auth:
     sub_links = get_links_for_subject(st.session_state.session,st.session_state.home_page_content)
-    select_subjects(sub_links)
+    selected_sub_finale = select_subjects(sub_links)
+    each_sub_data = get_subejct_data(st.session_state.session,selected_sub_finale)
+    st.write(each_sub_data)
+
+
+
+
 
 # goto_page = st.sidebar.radio("Navigation", ("login", "subject_selection", "download"))
 

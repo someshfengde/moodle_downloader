@@ -14,6 +14,7 @@ import streamlit_authenticator as stauth
 from bs4 import BeautifulSoup
 import gspread
 import pandas as pd
+from stqdm import stqdm
 
 
 from oauth2client.service_account import ServiceAccountCredentials
@@ -100,13 +101,13 @@ def get_subejct_data(session , subject_links, return_all_subjects = True, return
     if return_all_subjects:
         subject_wise_links = {}
         count =0 
-        for title, urls in tqdm(subject_links.items()):
+        for title, urls in stqdm(subject_links.items()):
             
             subject_wise_links[title] = {}
             r = session.get(urls)
             soup = bs4.BeautifulSoup(r.content,'html.parser')
             try:
-                for link in tqdm(soup.find_all('a', attrs={'href': re.compile("^http://moodle.apsit.org.in/moodle/mod/resource/view")})):
+                for link in stqdm(soup.find_all('a', attrs={'href': re.compile("^http://moodle.apsit.org.in/moodle/mod/resource/view")})):
                     subject_wise_links[title][link.span.text] = link.get('href')
                 
                 if return_in_folder_files:
@@ -130,11 +131,11 @@ def get_subejct_data(session , subject_links, return_all_subjects = True, return
             r = session.get(subject_url)
             soup = bs4.BeautifulSoup(r.content,'html.parser')
             subject_links_arr = {}
-            for link in tqdm(soup.find_all('a', attrs={'href': re.compile("^http://moodle.apsit.org.in/moodle/mod/resource/view")})):
+            for link in stqdm(soup.find_all('a', attrs={'href': re.compile("^http://moodle.apsit.org.in/moodle/mod/resource/view")})):
                 subject_links_arr[link.span.text] = link.get('href')
 
             if return_in_folder_files:
-                for link in tqdm(soup.find_all('a', attrs={'href': re.compile("^http://moodle.apsit.org.in/moodle/mod/folder/view")})):
+                for link in stqdm(soup.find_all('a', attrs={'href': re.compile("^http://moodle.apsit.org.in/moodle/mod/folder/view")})):
                     subject_links_arr[link.span.text] = link.get('href')
             
             return subject_links_arr

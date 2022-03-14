@@ -25,4 +25,4 @@ def select_subjects(subjects_and_links):
         # download_subjects(selected_subjects_finale)
 
     st.write(selected_subjects_finale)
-    return selected_subjects
+    return selected_subjects_finale
