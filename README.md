@@ -4,5 +4,6 @@ this repo is made for downloading subjects files from the moodle
 ## TODO: 
 - [x] ession management and listing links
 - [ ] Comment the code
+- [ ] Containerize the app
 - [ ] Detecting file types and saving with extension
 - [ ] Front end ( work on selecting subjectwise)
