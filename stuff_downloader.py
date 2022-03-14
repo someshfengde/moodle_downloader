@@ -117,16 +117,20 @@ def save_pdf_files(session , pdf_name , pdf_link):
         print("pdf_write_written_sucessfully")
 
 
-# %%
-session , home_page = get_session(payload)
-# %%
-subject_links = get_links_for_subject(session,home_page)
-# %%
-subject_data_total = get_subejct_data(session,subject_links)
+# # %%
+# session , home_page = get_session(payload)
+# # %%
+# subject_links = get_links_for_subject(session,home_page)
+# # %%
+# subject_data_total = get_subejct_data(session,subject_links)
 
 
-# %%
-save_pdf_files(session,"Basic Workshop Practice-I Syllabus File",subject_data_total["FEL105 BASIC WORKSHOP PRACTICE-I DIV-D  AY 2020-2021"]['Basic Workshop Practice-I Syllabus File'])
+# # %%
+# save_pdf_files(session,"Basic Workshop Practice-I Syllabus File",subject_data_total["FEL105 BASIC WORKSHOP PRACTICE-I DIV-D  AY 2020-2021"]['Basic Workshop Practice-I Syllabus File'])
 
 
+# # %%
+# subject_data_total
+# # %%
+# subject_links
 # %%
