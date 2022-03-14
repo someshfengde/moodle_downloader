@@ -2,6 +2,7 @@
 this repo is made for downloading subjects files from the moodle 
 
 ## TODO: 
-- [x] session management and listing links
-- [ ] detecting file types and saving with extension
-- [ ] front end ( work on selecting subjectwise) 
+- [x] ession management and listing links
+- [ ] Comment the code
+- [ ] Detecting file types and saving with extension
+- [ ] Front end ( work on selecting subjectwise)
