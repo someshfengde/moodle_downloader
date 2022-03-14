@@ -6,6 +6,20 @@ import bs4 as bs4
 from tqdm import tqdm 
 import requests
 import time
+import streamlit  as st 
+import numpy as np 
+import requests
+from stuff_downloader import * 
+import streamlit_authenticator as stauth
+from bs4 import BeautifulSoup
+import gspread
+import pandas as pd
+
+
+from oauth2client.service_account import ServiceAccountCredentials
+from tqdm import tqdm
+
+
 
 payload = {
     "username": "20102132",#20102154
@@ -23,6 +37,35 @@ def get_session(payload):
     s = requests.session()
     r = s.post(url, data=payload)
     return s,r 
+
+def get_gsheets():
+    scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
+    # add credentials to the account
+    creds = ServiceAccountCredentials.from_json_keyfile_name('./resume-sender-339315-4974b1a5a485.json', scope)
+    # authorize the clientsheet 
+    client = gspread.authorize(creds)
+    sheet = client.open('Moodle Downloader')
+    sheet_instance = sheet.get_worksheet(0)
+    records_data = sheet_instance.get_all_records()
+    records_df = pd.DataFrame.from_dict(records_data)
+    return records_df, sheet_instance
+
+def check_auth(r):
+    """
+    checks if the user is authenticated or not 
+    """
+    soup = bs4.BeautifulSoup(r.content,'html.parser')
+    regions = soup.find("a", {"id": "loginerrormessage"})
+    
+    if regions != None:
+        for x in regions: 
+            st.sidebar.error(x)
+        
+        return False
+    else: 
+        st.sidebar.success("Authenticated")
+        return True
+
 
 def get_links_for_subject(session,home_page_content,return_total_links= False ):
     """
