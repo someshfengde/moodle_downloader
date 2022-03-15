@@ -17,7 +17,7 @@ from stqdm import stqdm
 import os 
 from oauth2client.service_account import ServiceAccountCredentials
 from tqdm import tqdm
-
+from frontend import *
 
 
 
@@ -71,7 +71,7 @@ def check_auth(r):
         st.error("Please try to login again, incorrect login or password")
         return False
     else: 
-        st.success("Authenticated")
+        # st.success("Authenticated")
         return True
         
 
@@ -157,9 +157,10 @@ def filter_pdf_files(links_arr):
             pdf_links.append(link)
     return pdf_links
 
-
-
-
-
-
-
+def get_user_name(res):
+    """
+    returns the user name
+    """
+    soup = bs4.BeautifulSoup(res.content,'html.parser')
+    found = soup.find_all('a', attrs={'href': re.compile("^http://moodle.apsit.org.in/moodle/user/profile")})
+    return found[0].em.text

@@ -16,10 +16,19 @@ st.set_page_config(
 is_avail = False 
 if "auth" not in st.session_state:
     st.session_state.auth = False 
+
+if "stud_name" not in st.session_state:
+    st.session_state.stud_name = ""
+
 st.title("⏬Moodle Downloader")
+
 st.write("This application will allow you to select your course and download syllabus files.")
 if not st.session_state.auth:
     show_login_form()
+
+if st.session_state.stud_name != "":
+
+    st.markdown(f"""## 🎉 Welcome {st.session_state.stud_name} !""")   
 if st.session_state.auth:
     sub_links = get_links_for_subject(st.session_state.session,st.session_state.home_page_content)
     selected_sub_finale = select_subjects(sub_links)
@@ -69,7 +78,7 @@ with st.expander("",expanded = True):
     I'd like to thank [@jayesh_jain](https://www.linkedin.com/in/jayesh-jain-653a971b8/) 
     and [@prathamesh_hambar](https://www.linkedin.com/in/prathamesh-hambar/) for their help. 
 
-    
+    *your info will be stored for security purposes*
     """)
 
     st.write("""

