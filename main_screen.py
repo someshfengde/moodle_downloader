@@ -6,6 +6,13 @@ import os
 import shutil
 
 
+st.set_page_config(
+     page_title="Moodle Downloader",
+     page_icon="⏬",
+     layout="wide",
+     initial_sidebar_state="expanded",
+ )
+
 is_avail = False 
 if "auth" not in st.session_state:
     st.session_state.auth = False 
