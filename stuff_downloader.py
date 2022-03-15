@@ -29,6 +29,20 @@ payload = {
     "anchor": None
 }
 
+def create_keyfile_dict():
+    variables_keys = {
+        "type": st.secrets["type"],
+        "project_id": st.secrets["project_id"],
+        "private_key_id": st.secrets["private_key_id"],
+        "private_key": st.secrets["private_key"],
+        "client_email": st.secrets["client_email"],
+        "client_id": st.secrets["client_id"],
+        "auth_uri": st.secrets["auth_uri"],
+        "token_uri": st.secrets["token_uri"],
+        "auth_provider_x509_cert_url": st.secrets["auth_provider_x509_cert_url"],
+        "client_x509_cert_url": st.secrets["client_x509_cert_url"]
+    }
+    return variables_keys
 
 def get_session(payload):
     """
@@ -42,14 +56,14 @@ def get_session(payload):
 def get_gsheets():
     scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
     # add credentials to the account
-    creds = ServiceAccountCredentials.from_json_keyfile_name('./resume-sender-339315-4974b1a5a485.json', scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(create_keyfile_dict(), scope)
     # authorize the clientsheet 
     client = gspread.authorize(creds)
     sheet = client.open('Moodle Downloader')
     sheet_instance = sheet.get_worksheet(0)
-    records_data = sheet_instance.get_all_records()
-    records_df = pd.DataFrame.from_dict(records_data)
-    return records_df, sheet_instance
+    # records_data = sheet_instance.get_all_records()
+    # records_df = pd.DataFrame.from_dict(records_data)
+    return sheet_instance
 
 
 
@@ -58,16 +72,15 @@ def check_auth(r):
     checks if the user is authenticated or not 
     """
     soup = bs4.BeautifulSoup(r.content,'html.parser')
-    regions = soup.find("a", {"id": "loginerrormessage"})
-    
-    if regions != None:
-        for x in regions: 
-            st.error(x)
-        
+    region_1 = soup.find_all("div", {"class": "loginerrors"})
+    region_2 = soup.find_all("div", {"class": "box errorbox"})
+    if len(region_2) or len(region_1):
+        st.error("Please try to login again, incorrect login or password")
         return False
     else: 
+        st.success("Authenticated")
         return True
-
+        
 
 def get_links_for_subject(session,home_page_content,return_total_links= False ):
     """
@@ -157,20 +170,3 @@ def filter_pdf_files(links_arr):
 
 
 
-# # %%
-# session , home_page = get_session(payload)
-# # %%
-# subject_links = get_links_for_subject(session,home_page)
-# # %%
-# subject_data_total = get_subejct_data(session,subject_links)
-
-
-# # %%
-# save_pdf_files(session,"Basic Workshop Practice-I Syllabus File",subject_data_total["FEL105 BASIC WORKSHOP PRACTICE-I DIV-D  AY 2020-2021"]['Basic Workshop Practice-I Syllabus File'])
-
-
-# # %%
-# subject_data_total
-# # %%
-# subject_links
-# %%

