@@ -52,9 +52,9 @@ if st.session_state.auth:
         if btn: 
             st.success("Downloaded Sucessfully")
 
-with st.expander("About",expanded = True):
+with st.expander("",expanded = True):
     st.markdown(""" 
-
+    ### About
     This application will help you to download pdf files to your computer from APSIT moodle.
     In this application I've used python streamlit framework to create a web application. 
     This application is developed by [@somesh_fengade](https://www.linkedin.com/in/somesh-9188/)
@@ -62,23 +62,16 @@ with st.expander("About",expanded = True):
     I'd like to thank [@jayesh_jain](https://www.linkedin.com/in/jayesh-jain-653a971b8/) 
     and [@prathamesh_hambar](https://www.linkedin.com/in/prathamesh-hambar/) for their help. 
 
-    links for my socials:
-
-
-    ![![Follow](<https://img.shields.io/twitter/follow/><username>?style=social)](https://twitter.com/<username>)
-    ![](https://raw.githubusercontent.com/hussainweb/hussainweb/main/icons/instagram.png)(<https://www.twitter.com/><username>)
-        <a href="https://www.instagram.com/abhishknads/">
-        <img align="left" alt="Abhishek's Instagram" width="22px" src="https://raw.githubusercontent.com/hussainweb/hussainweb/main/icons/instagram.png" />
-        </a>
-        <a href="https://discord.gg/XTW52Kt">
-        <img align="left" alt="Abhishek's Discord" width="22px" src="https://raw.githubusercontent.com/peterthehan/peterthehan/master/assets/discord.svg" />
-        </a>
-        <a href="https://twitter.com/abhisheknaiidu">
-        <img align="left" alt="Abhishek Naidu | Twitter" width="22px" src="https://raw.githubusercontent.com/peterthehan/peterthehan/master/assets/twitter.svg" />
-        </a>
-        <a href="https://www.linkedin.com/in/abhisheknaiidu/">
-        <img align="left" alt="Abhishek's LinkedIN" width="22px" src="https://raw.githubusercontent.com/peterthehan/peterthehan/master/assets/linkedin.svg" />
-        </a>
+    
     """)
-st.write("[![](./github.gif)](https://github.com/someshfengde/moodle_downloader)")
-st.write("[![Star](<https://img.shields.io/github/stars/><username>/<repo>.svg?logo=github&style=social)](<https://gitHub.com/><username>/<repo>)")
+
+    st.write("""
+    ### Repo Link:   
+    [![Star]( https://img.shields.io/github/stars/someshfengde/moodle_downloader?style=social)](https://github.com/someshfengde/moodle_downloader)    
+    ### Links to my socials:
+    [![LinkedIn](https://img.shields.io/github/followers/someshfengde?style=social)](https://github.com/someshfengde)  
+    [![](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin&labelColor=blue)](https://www.linkedin.com/in/somesh-9188/)   
+    [![](https://img.shields.io/twitter/follow/someshfengde?style=social)](https://twitter.com/someshfengde)""") 
+    st.write("")
+    st.write("")
+
