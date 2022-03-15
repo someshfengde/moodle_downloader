@@ -16,7 +16,7 @@ st.set_page_config(
 is_avail = False 
 if "auth" not in st.session_state:
     st.session_state.auth = False 
-st.title("Moodle Downloader")
+st.title("⏬Moodle Downloader")
 st.write("This application will allow you to select your course and download syllabus files.")
 if not st.session_state.auth:
     show_login_form()
