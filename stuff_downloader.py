@@ -14,32 +14,26 @@ from bs4 import BeautifulSoup
 import gspread
 import pandas as pd
 from stqdm import stqdm
-
-
+import os 
 from oauth2client.service_account import ServiceAccountCredentials
 from tqdm import tqdm
 
 
 
-payload = {
-    "username": "20102132",#20102154
-    "password": "20102132@Apsit",
-    "rememberusername": 1,
-    "anchor": None
-}
+
 
 def create_keyfile_dict():
     variables_keys = {
-        "type": st.secrets["type"],
-        "project_id": st.secrets["project_id"],
-        "private_key_id": st.secrets["private_key_id"],
-        "private_key": st.secrets["private_key"],
-        "client_email": st.secrets["client_email"],
-        "client_id": st.secrets["client_id"],
-        "auth_uri": st.secrets["auth_uri"],
-        "token_uri": st.secrets["token_uri"],
-        "auth_provider_x509_cert_url": st.secrets["auth_provider_x509_cert_url"],
-        "client_x509_cert_url": st.secrets["client_x509_cert_url"]
+        "type": os.environ["type"],
+        "project_id": os.environ["project_id"],
+        "private_key_id": os.environ["private_key_id"],
+        "private_key": os.environ["private_key"],
+        "client_email": os.environ["client_email"],
+        "client_id": os.environ["client_id"],
+        "auth_uri": os.environ["auth_uri"],
+        "token_uri": os.environ["token_uri"],
+        "auth_provider_x509_cert_url": os.environ["auth_provider_x509_cert_url"],
+        "client_x509_cert_url": os.environ["client_x509_cert_url"]
     }
     return variables_keys
 
