@@ -152,14 +152,9 @@ def filter_pdf_files(links_arr):
     return pdf_links
 
 
-def save_pdf_files(session , pdf_name , pdf_link):
-    """
-    saves the pdf files to the folder
-    """
-    r = session.get(pdf_link)
-    with open(pdf_name + ".pdf", 'wb') as f:
-        f.write(r.content)
-        print("pdf_write_written_sucessfully")
+
+
+
 
 
 # # %%
