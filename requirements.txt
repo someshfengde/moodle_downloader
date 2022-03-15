@@ -1,0 +1,9 @@
+stqdm
+tqdm 
+requests 
+time
+streamlit 
+gspread
+pandas
+oauth2client
+bs4
